@@ -16,8 +16,8 @@ from werkzeug.utils import secure_filename
 import pygeoip
 from flask import flash
 from flask import redirect
-from flask import escape
 import cgi
+from markupsafe import escape
 
 from webui import require_admin
 from models import db
