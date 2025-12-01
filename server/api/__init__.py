@@ -16,7 +16,6 @@ from werkzeug.utils import secure_filename
 import pygeoip
 from flask import flash
 from flask import redirect
-import cgi
 from markupsafe import escape
 
 from webui import require_admin
@@ -106,7 +105,7 @@ def report_command(agent_id):
     if not agent:
         abort(404)
     out = request.form['output']
-    agent.output += cgi.escape(out)
+    agent.output += escape(out)
     db.session.add(agent)
     db.session.commit()
     return ''

