@@ -11,6 +11,10 @@ Ares is made of two main programs:
 
 The Web interface can be run on any server running Python. The agent can be compiled to native executables using **pyinstaller**.
 
+## Movie from coding  
+
+Movie of me bumping to python3: [https://youtu.be/yNkZuWI-6R8](https://youtu.be/yNkZuWI-6R8)
+
 ## Setup
 
 Install the Python requirements:
@@ -128,3 +132,5 @@ Kills the agent.
 help
 This help.
 ```
+
+
